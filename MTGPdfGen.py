@@ -1,10 +1,12 @@
 import PyPDF2
 from PIL import Image, ImageFile
 import urllib.request
-from mtgsdk import Card
 import time
+import requests as req
+import json
 
 ImageFile.LOAD_TRUNCATED_IMAGES=True
+baseUrl = 'https://api.scryfall.com/cards/'
 starttime = time.time()
 
 def generatePdfFromCardArray():
@@ -23,29 +25,28 @@ def getCardsFromFile(pathToFile):
         amount = fullCardname.split(" ")[0]
         for i in range (int(amount)):
             cardInfo = getCardInfo(fullCardname)
-            cardnames = getCardNames(getCardByNameAndInfo(cardInfo[0], cardInfo[1], cardInfo[2]))
-            for name in cardnames:
+            faces = getFaces(getCardBySetAndNumber(cardInfo[1], cardInfo[2]))
+            for face in faces:
                 time.sleep(1.0 - ((time.time() - starttime) % 1.0))
-                cardImages.append(getCardImageByName(name, cardInfo[1], cardInfo[2]))
+                cardImages.append(getCardImageByFace(face))
                 print("Loaded card: " + fullCardname)
     return cardImages
 
 def getCardInfo(fullCardname):
-    return [fullCardname.split("(")[0].split(" ", 1)[1].rsplit(" ", 1)[0], fullCardname.split("(")[1].split(")")[0], fullCardname.split(")")[1].split(" ")[1]]
+    return [fullCardname.split("(")[0].split(" ", 1)[1].rsplit(" ", 1)[0], fullCardname.split("(")[1].split(")")[0].lower(), fullCardname.split(")")[1].split(" ")[1]]
 
-def getCardByNameAndInfo(cardname, setCode, collectorsNumber):
-    card = Card.where(name=cardname).where(set=setCode).where(number=collectorsNumber).all()[0]
+def getCardBySetAndNumber(setCode, collectorsNumber):
+    card = json.loads(req.get(baseUrl + setCode + "/" + collectorsNumber).text)
     return card
 
-def getCardByName(cardname):
-    return Card.where(name=cardname)
+def getFaces(card): 
+    if 'card_faces' in card:
+        return card['card_faces']
+    else:
+        return [card]
 
-def getCardNames(card: Card): 
-    return card.names if card.names else [card.name]
-
-def getCardImageByName(cardname, setCode, collectorsNumber):
-    card: Card = getCardByNameAndInfo(cardname, setCode, collectorsNumber)
-    urllib.request.urlretrieve((card.image_url), 'C:\\Users\Felipe Bianco\Desktop\\temp')
+def getCardImageByFace(face):
+    urllib.request.urlretrieve((face['image_uris']['normal']), 'C:\\Users\Felipe Bianco\Desktop\\temp')
     img = Image.open('C:\\Users\Felipe Bianco\Desktop\\temp')
     img.getdata()
     return img
