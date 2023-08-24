@@ -8,7 +8,9 @@ def main():
         Utils.makeTempDir()
         option = input('Choose game: [Y]GO/[M]TG\n').lower()
         if(option == 'y'):
-            input('Move YDK files to input folder, then press [ENTER] to continue')
+            print('Move YDK files to input folder, then press [ENTER] to continue')
+            print('(The YDKs should be exported directly from YGOProDeck, saved as .ydk)')
+            input('(Go to your YGOProDeck deck > More > Download YDK or, in the deckbuilder, Export > To .ydk Deck file)')
             print('Preparing YDK')
             YGOYdkService.prepareYDKs()
             input('YDK prepared. Press [ENTER] to continue')
@@ -19,8 +21,8 @@ def main():
             print('Done! PDF can be found in ./output/ygoOutput.pdf')
         elif(option == 'm'):
             print('Move decklist file to input folder, rename it to "mtgInput.txt", then press [ENTER] to continue')
-            print('(The decklist should be in XMAGE .dck format, with the extension changed to .txt)')
-            input('(Its recommended to make a big list with all cards and export via moxfield > xmage.dck)')
+            print('(The decklist should be in Moxfield\'s export format, saved as .txt)')
+            input('(Go to your Moxfield deck > Export > Copy full list and save that to a .txt file)')
             print('Fetching cards...')
             images = MTGCardService.getCardsFromFile('./input/mtgInput.txt')
             print('Assembling PDF...')
