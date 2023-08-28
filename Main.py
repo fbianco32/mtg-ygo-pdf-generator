@@ -46,7 +46,7 @@ def main():
             cardHeight = int(input('Enter card height in mm: \n'))
             bgColor = input('Enter page background color in hex (#1234AB): \n')
             print('Assembling PDF...')
-            Utils.assemblePDF(images, width, height, margin, bgColor, cardWidth, cardHeight, 'customOutput')
+            Utils.assemblePDF(images, width, height, margin, bgColor, cardWidth, cardHeight, hasCardback, 'customOutput')
             print('Done! PDF can be found in ./output/customOutput.pdf')
         else:
             print('Invalid Game')
