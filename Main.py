@@ -8,9 +8,9 @@ def main():
     try:
         Utils.makeTempDir()
         option = input('Choose game: [Y]GO/[M]TG/[C]ustom\n').lower()
-        width = input('Enter page Width (mm): \n')
-        height = input('Enter page Height (mm): \n')
-        margin = input('Enter Margin between cards (mm): \n')
+        width = int(input('Enter page Width (mm): \n'))
+        height = int(input('Enter page Height (mm): \n'))
+        margin = int(input('Enter Margin between cards (mm): \n'))
         hasCardback = False
         cardbackOption = input('Do you want to add a cardback? ([Y][N])\n')
         if(cardbackOption.lower() == 'y'):
