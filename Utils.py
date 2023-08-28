@@ -30,10 +30,10 @@ def assemblePDF(images: List[Image.Image], width: float, height: float, margin: 
     if(hasCardback):
         pdf.add_page() # First page with cardbacks
         pdf.image(bg,0,0,width,height, 'jpeg')
-        while(y + cardHeight + margin < height):
+        while(y + cardHeight + margin <= height):
             pdf.image(cardback, x, y, cardWidth, cardHeight)
             x += cardWidth + margin
-            if(x + cardWidth + margin > width):
+            if(x + cardWidth + margin >= width):
                 y += cardHeight + margin
                 x = margin
         y = margin
@@ -43,10 +43,10 @@ def assemblePDF(images: List[Image.Image], width: float, height: float, margin: 
     pdf.set_draw_color(hex_to_rgb(invert(bgColor)))
     pdf.image(bg,0,0,width,height, 'jpeg')
     for image in images:
-        if(x + cardWidth + margin > width):
+        if(x + cardWidth + margin >= width):
             y += cardHeight + margin
             x = margin
-        if(y + cardHeight + margin > height):
+        if(y + cardHeight + margin >= height):
             pdf.add_page()
             pdf.image(bg,0,0,width,height, 'jpeg')
             y = margin
