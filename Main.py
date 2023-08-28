@@ -14,7 +14,7 @@ def main():
         if(option == 'y'):
             print('Move YDK files to input folder, then press [ENTER] to continue')
             print('(The YDKs should be exported directly from YGOProDeck, saved as .ydk)')
-            input('(Go to your YGOProDeck deck > More > Download YDK or, in the deckbuilder, Export > To .ydk Deck file)')
+            input('(Go to your YGOProDeck deck > More > Download YDK or, in the deckbuilder, Export > To .ydk Deck file)\n')
             print('Preparing YDK')
             YGOYdkService.prepareYDKs()
             input('YDK prepared. Press [ENTER] to continue')
@@ -26,7 +26,7 @@ def main():
         elif(option == 'm'):
             print('Move decklist file to input folder, rename it to "mtgInput.txt", then press [ENTER] to continue')
             print('(The decklist should be in Moxfield\'s export format, saved as .txt)')
-            input('(Go to your Moxfield deck > Export > Copy full list and save that to a .txt file)')
+            input('(Go to your Moxfield deck > Export > Copy full list and save that to a .txt file)\n')
             print('Fetching cards...')
             images = MTGCardService.getCardsFromFile('./input/mtgInput.txt')
             print('Assembling PDF...')
@@ -34,12 +34,14 @@ def main():
            # images[0].save('output/mtgOutput.pdf', "PDF", save_all=True, append_images=images[1:], dpi=(196,196))
             print('Done! PDF can be found in ./output/mtgOutput.pdf')
         elif(option == 'c'):
-            input('Move card images to input folder, then press [ENTER] to continue')
+            input('Move card images to input folder, then press [ENTER] to continue\n')
             print('Fetching cards...')
             images = CustomCardService.getCardsFromFile('./input/custom/')
-            dpi = int(input('Enter images DPI: '))
+            cardWidth = int(input('Enter card width in mm: \n'))
+            cardHeight = int(input('Enter card height in mm: \n'))
+            bgColor = input('Enter page background color in hex (#1234AB): \n')
             print('Assembling PDF...')
-            images[0].save('output/customOutput.pdf', "PDF", save_all=True, append_images=images[1:], dpi=(dpi,dpi))
+            Utils.assemblePDF(images, width, height, margin, bgColor, cardWidth, cardHeight, 'customOutput')
             print('Done! PDF can be found in ./output/customOutput.pdf')
         else:
             print('Invalid Game')
