@@ -2,7 +2,8 @@ from PIL import Image
 from typing import List
 import os
 import fpdf
-from reportlab.pdfgen import canvas
+import shutil
+
 
 tempDir = './temp/'
 tempFilePath = './temp/tempFile'
@@ -12,8 +13,7 @@ def makeTempDir():
     open(tempFilePath, 'w+').close()
 
 def cleanTempDir():
-    os.remove(tempFilePath)
-    os.removedirs(tempDir)
+    shutil.rmtree(tempDir)
 
 def inchesToMm(num):
     return num * 25.4
@@ -21,10 +21,14 @@ def inchesToMm(num):
 def mmToInches(num):
     return num / 25.4
 
-def assemblePDF(images: List[Image.Image], width: int, height: int, margin: int, bgColor: str, cardHeight, cardWidth, fileName):
-    pdf = fpdf.FPDF(orientation='L',unit='mm', format=[height, width])
+def assemblePDF(images: List[Image.Image], width: int, height: float, margin: float, bgColor: str, cardHeight, cardWidth, fileName):
+    pdf = fpdf.FPDF(orientation='L', unit = 'mm', format=(int(height), int(width)))
     x = 0
     y = 0
+    img = Image.new('RGB', (height,width), bgColor)
+    img.save('temp/bg.jpeg')
+    pdf.add_page()
+    pdf.image('temp/bg.jpeg',0,0,width,height, 'jpeg')
     for image in images:
         if(x > width + cardWidth + margin/2):
             y += cardHeight + margin/2
@@ -32,5 +36,7 @@ def assemblePDF(images: List[Image.Image], width: int, height: int, margin: int,
         if(y > height + cardHeight + margin/2):
             pdf.add_page()
             y = 0
-        pdf.image(image, x, y, cardWidth, cardHeight)
+        x += cardWidth + margin
+        image.save('temp/workingImage.jpg')
+        pdf.image('temp/workingImage.jpg', x, y, cardWidth, cardHeight)
     pdf.output('output/'+fileName+'.pdf', 'F')

@@ -8,6 +8,9 @@ def main():
     try:
         Utils.makeTempDir()
         option = input('Choose game: [Y]GO/[M]TG/[C]ustom\n').lower()
+        width = input('Enter page Width (mm): \n')
+        height = input('Enter page Height (mm): \n')
+        margin = input('Enter Margin between cards (mm): \n')
         if(option == 'y'):
             print('Move YDK files to input folder, then press [ENTER] to continue')
             print('(The YDKs should be exported directly from YGOProDeck, saved as .ydk)')
