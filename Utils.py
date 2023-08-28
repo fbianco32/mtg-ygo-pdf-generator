@@ -35,8 +35,9 @@ def assemblePDF(images: List[Image.Image], width: int, height: float, margin: fl
             x = 0
         if(y > height + cardHeight + margin/2):
             pdf.add_page()
+            pdf.image('temp/bg.jpeg',0,0,width,height, 'jpeg')
             y = 0
         x += cardWidth + margin
         image.save('temp/workingImage.jpg')
-        pdf.image('temp/workingImage.jpg', x, y, cardWidth, cardHeight)
+        pdf.image('temp/workingImage.jpg', x, y, cardHeight, cardWidth)
     pdf.output('output/'+fileName+'.pdf', 'F')
