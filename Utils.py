@@ -21,23 +21,23 @@ def inchesToMm(num):
 def mmToInches(num):
     return num / 25.4
 
-def assemblePDF(images: List[Image.Image], width: int, height: float, margin: float, bgColor: str, cardHeight, cardWidth, fileName):
+def assemblePDF(images: List[Image.Image], height: int, width: float, margin: float, bgColor: str, cardWidth, cardHeight, fileName):
     pdf = fpdf.FPDF(orientation='L', unit = 'mm', format=(int(height), int(width)))
-    x = 0
-    y = 0
-    img = Image.new('RGB', (height,width), bgColor)
+    x = margin
+    y = margin
+    img = Image.new('RGB', (width,height), bgColor)
     img.save('temp/bg.jpeg')
     pdf.add_page()
     pdf.image('temp/bg.jpeg',0,0,width,height, 'jpeg')
     for image in images:
-        if(x > width + cardWidth + margin/2):
+        if(x + cardWidth + margin > width):
             y += cardHeight + margin/2
-            x = 0
-        if(y > height + cardHeight + margin/2):
+            x = margin
+        if(y + cardHeight + margin > height):
             pdf.add_page()
             pdf.image('temp/bg.jpeg',0,0,width,height, 'jpeg')
-            y = 0
-        x += cardWidth + margin
+            y = margin
         image.save('temp/workingImage.jpg')
-        pdf.image('temp/workingImage.jpg', x, y, cardHeight, cardWidth)
+        pdf.image('temp/workingImage.jpg', x, y, cardWidth, cardHeight)
+        x += cardWidth + margin
     pdf.output('output/'+fileName+'.pdf', 'F')
