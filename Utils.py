@@ -43,10 +43,10 @@ def assemblePDF(images: List[Image.Image], width: float, height: float, margin: 
     pdf.set_draw_color(hex_to_rgb(invert(bgColor)))
     pdf.image(bg,0,0,width,height, 'jpeg')
     for image in images:
-        if(x + cardWidth + margin >= width):
+        if(x + cardWidth + margin > width):
             y += cardHeight + margin
             x = margin
-        if(y + cardHeight + margin >= height):
+        if(y + cardHeight + margin > height):
             pdf.add_page()
             pdf.image(bg,0,0,width,height, 'jpeg')
             y = margin
