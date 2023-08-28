@@ -6,7 +6,7 @@ Run Main.py
 Follow the instructions in the console
 
 ## TODO
-Fix Voloism
-Tune margin logic
+Add cut guides
+Tune margin logic/bleed
 Center Cards
 Send requests to scryfall/ygopro in batch
