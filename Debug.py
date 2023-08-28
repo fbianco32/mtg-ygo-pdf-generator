@@ -7,10 +7,10 @@ try:
     Utils.makeTempDir()
     #Debug
     images = MTGCardService.getCardsFromFile('./input/mtgInput.txt')
-    Utils.assemblePDF(images, 297, 210, 5, '#13160d', 63, 88, True, 'mtgOutput') # bgColor for mtg is always black, dpi for MTG is always 196
+    Utils.assemblePDF(images, 210, 297, 5, '#13160d', 63, 88, True, 'mtgOutput') # A4
 
     images = YGOCardService.getCardsFromFile('./input/ygoInput.txt')
-    Utils.assemblePDF(images, 297, 210, 5, '#60647f', 59, 86, True, 'ygoOutput') # bgColor for mtg is always gray, dpi for YGO is always 187
+    Utils.assemblePDF(images, 59, 86, 0, '#60647f', 59, 86, False, 'ygoOutput') # 1 card per page
 except BaseException as e:
     print("An error has occured, info: " + str(e))
     raise e

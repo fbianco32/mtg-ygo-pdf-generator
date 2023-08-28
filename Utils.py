@@ -21,12 +21,24 @@ def inchesToMm(num):
 def mmToInches(num):
     return num / 25.4
 
-def assemblePDF(images: List[Image.Image], height: int, width: float, margin: float, bgColor: str, cardWidth, cardHeight, isCentered, fileName):
+def assemblePDF(images: List[Image.Image], width: float, height: float, margin: float, bgColor: str, cardWidth, cardHeight, hasCardback, fileName):
     pdf = fpdf.FPDF(orientation='L', unit = 'mm', format=(int(height), int(width)))
     x = margin
     y = margin
     bg = Image.new('RGB', (width,height), bgColor)
-    pdf.add_page()
+    cardback = Image.open('input/cardback.jpg')
+    if(hasCardback):
+        pdf.add_page() # First page with cardbacks
+        pdf.image(bg,0,0,width,height, 'jpeg')
+        while(y + cardHeight + margin < height):
+            pdf.image(cardback, x, y, cardWidth, cardHeight)
+            x += cardWidth + margin
+            if(x + cardWidth + margin > width):
+                y += cardHeight + margin
+                x = margin
+        y = margin
+
+    pdf.add_page() # Start adding cards
     pdf.set_line_width(0.2)
     pdf.set_draw_color(hex_to_rgb(invert(bgColor)))
     pdf.image(bg,0,0,width,height, 'jpeg')

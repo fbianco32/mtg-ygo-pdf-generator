@@ -11,6 +11,11 @@ def main():
         width = input('Enter page Width (mm): \n')
         height = input('Enter page Height (mm): \n')
         margin = input('Enter Margin between cards (mm): \n')
+        hasCardback = False
+        cardbackOption = input('Do you want to add a cardback? ([Y][N])\n')
+        if(cardbackOption.lower() == 'y'):
+            input('Move the cardback.jpg file to input folder, then press [ENTER] to continue\n')
+            hasCardback = True
         if(option == 'y'):
             print('Move YDK files to input folder, then press [ENTER] to continue')
             print('(The YDKs should be exported directly from YGOProDeck, saved as .ydk)')
@@ -21,7 +26,7 @@ def main():
             print('Fetching card images...')
             images = YGOCardService.getCardsFromFile('./input/ygoInput.txt')
             print('Assembling PDF...')
-            Utils.assemblePDF(images, width, height, margin, '#60647f', 59, 86, 'ygoOutput') # bgColor for mtg is always gray, dpi for YGO is always 187
+            Utils.assemblePDF(images, width, height, margin, '#60647f', 59, 86, hasCardback, 'ygoOutput') # bgColor for mtg is always gray, dpi for YGO is always 187
             print('Done! PDF can be found in ./output/ygoOutput.pdf')
         elif(option == 'm'):
             print('Move decklist file to input folder, rename it to "mtgInput.txt", then press [ENTER] to continue')
@@ -30,7 +35,7 @@ def main():
             print('Fetching cards...')
             images = MTGCardService.getCardsFromFile('./input/mtgInput.txt')
             print('Assembling PDF...')
-            Utils.assemblePDF(images, width, height, margin, '#13160d', 63, 88, 'mtgOutput') # bgColor for mtg is always black, dpi for MTG is always 196
+            Utils.assemblePDF(images, width, height, margin, '#13160d', 63, 88, hasCardback, 'mtgOutput') # bgColor for mtg is always black, dpi for MTG is always 196
            # images[0].save('output/mtgOutput.pdf', "PDF", save_all=True, append_images=images[1:], dpi=(196,196))
             print('Done! PDF can be found in ./output/mtgOutput.pdf')
         elif(option == 'c'):
