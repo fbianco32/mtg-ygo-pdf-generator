@@ -8,6 +8,7 @@ import CustomCardService
 def main():
     try:
         Utils.makeTempDir()
+        Utils.makeDirsIfNotExists()
         option = input('Choose game: [Y]GO/[M]TG/[C]ustom\n').lower()
         width = int(input('Enter page Width (mm): \n'))
         height = int(input('Enter page Height (mm): \n'))
@@ -34,7 +35,7 @@ def main():
             Utils.assemblePDF(images, width, height, margin, '#60647f', 59, 86, hasCardback, 'ygoOutput') # bgColor for mtg is always gray, dpi for YGO is always 187
             print('Done! PDF can be found in ./output/ygoOutput.pdf')
         elif(option == 'm'):
-            print('Move decklist files to input folder, then press [ENTER] to continue')
+            print('Move decklist files to mtgInput folder, then press [ENTER] to continue')
             print('(The decklists should be in Moxfield\'s export format, saved as .txt)')
             input('(Go to your Moxfield deck > Export > Copy full list and save that to a .txt file)\n')
             cardCount = MTGDecksService.prepareMTGDecks()

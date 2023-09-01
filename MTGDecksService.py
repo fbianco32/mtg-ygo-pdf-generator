@@ -15,7 +15,7 @@ def prepareMTGDecks() -> int:
     for fname in os.listdir(Utils.getPath('mtgInput')):
         with open(Utils.getPath('mtgInput', fname)) as infile:
             for line in infile.readlines():
-                if(line not in IGNORED_LINES):
+                if(line.rstrip() not in IGNORED_LINES):
                     if line[-1] != '\n':
                         line += '\n'
                     cards.append(line)

@@ -16,7 +16,7 @@ def getCardsFromFile(totalCards):
     for line in lines:
         cardImages.append(getCardById(line.rstrip()))
         cardCount += 1
-        print("Loaded card: " + line.rstrip() + ", " + (cardCount/totalCards)*100 +"\% done")
+        print("Loaded card: " + line.rstrip() + ", " + str(round(((cardCount/totalCards)*100), 2)) +"% done")
     return cardImages
 
 

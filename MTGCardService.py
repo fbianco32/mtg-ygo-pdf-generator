@@ -23,7 +23,7 @@ def getCardsFromFile(totalCards):
             for face in faces:
                 cardImages.append(getCardImageByFace(face))
                 cardCount += 1
-                print("Loaded card: " + fullCardname + ", " + (cardCount/totalCards)*100 +"\% done")
+                print("Loaded card: " + fullCardname + ", " + str(round(((cardCount/totalCards)*100), 2)) +"% done")
     return cardImages
 
 def getCardInfo(fullCardname):

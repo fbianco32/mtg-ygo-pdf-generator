@@ -11,8 +11,19 @@ def getTempFilePath() -> str:
     return getPath('temp', 'tempFile')
 
 def makeTempDir():
-    os.makedirs(getTempDir())
+    makeDirIfNotExists(getTempDir())
     open(getTempFilePath(), 'w+').close()
+
+def makeDirsIfNotExists():
+    makeDirIfNotExists(getPath('input'))
+    makeDirIfNotExists(getPath('output'))
+    makeDirIfNotExists(getPath('mtgInput'))
+    makeDirIfNotExists(getPath('ydkInput'))
+
+def makeDirIfNotExists(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
 
 def cleanTempDir():
     shutil.rmtree(getTempDir())
@@ -28,8 +39,8 @@ def assemblePDF(images: List[Image.Image], width: float, height: float, margin: 
     x = margin
     y = margin
     bg = Image.new('RGB', (width,height), bgColor)
-    cardback = Image.open('input/cardback.jpg')
     if(hasCardback):
+        cardback = Image.open('input/cardback.jpg')
         pdf.add_page() # First page with cardbacks
         pdf.image(bg,0,0,width,height, 'jpeg')
         while(y + cardHeight + margin <= height):
