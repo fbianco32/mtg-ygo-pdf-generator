@@ -8,8 +8,9 @@ import os
 ImageFile.LOAD_TRUNCATED_IMAGES=True
 baseUrl = 'https://api.scryfall.com/cards/'
 
-def getCardsFromFile():
+def getCardsFromFile(totalCards):
     cardImages = []
+    cardCount = 0
     with open(Utils.getPath('input', 'mtgInput.txt'), 'r') as f:
         lines = f.readlines()
         f.close()
@@ -21,7 +22,8 @@ def getCardsFromFile():
             faces = getFaces(getCardBySetAndNumber(cardInfo[1], cardInfo[2]))
             for face in faces:
                 cardImages.append(getCardImageByFace(face))
-                print("Loaded card: " + fullCardname)
+                cardCount += 1
+                print("Loaded card: " + fullCardname + ", " + (cardCount/totalCards)*100 +"\% done")
     return cardImages
 
 def getCardInfo(fullCardname):

@@ -1,8 +1,9 @@
 # Process
-input/
-output/
-temp/
-ydkInput/
+input/*
+output/*
+temp/*
+ydkInput/*
+mtgInput/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

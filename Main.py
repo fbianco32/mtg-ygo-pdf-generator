@@ -29,7 +29,7 @@ def main():
             print(f"Found {cardCount} unique cards")
             input('YDK prepared. Press [ENTER] to continue')
             print('Fetching card images...')
-            images = YGOCardService.getCardsFromFile()
+            images = YGOCardService.getCardsFromFile(cardCount)
             print('Assembling PDF...')
             Utils.assemblePDF(images, width, height, margin, '#60647f', 59, 86, hasCardback, 'ygoOutput') # bgColor for mtg is always gray, dpi for YGO is always 187
             print('Done! PDF can be found in ./output/ygoOutput.pdf')
@@ -44,7 +44,7 @@ def main():
             print(f"Found {cardCount} unique cards")
             input('MTG decks prepared. Press [ENTER] to continue')
             print('Fetching cards...')
-            images = MTGCardService.getCardsFromFile()
+            images = MTGCardService.getCardsFromFile(cardCount)
             print('Assembling PDF...')
             Utils.assemblePDF(images, width, height, margin, '#13160d', 63, 88, hasCardback, 'mtgOutput') # bgColor for mtg is always black, dpi for MTG is always 196
            # images[0].save('output/mtgOutput.pdf', "PDF", save_all=True, append_images=images[1:], dpi=(196,196))

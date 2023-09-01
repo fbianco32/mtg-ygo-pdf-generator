@@ -21,7 +21,7 @@ def prepareMTGDecks() -> int:
                     cards.append(line)
                     cardCount += 1
     
-    with open(Utils.getPath('input', 'mtgInput.txt'), 'w') as outfile:
+    with open(Utils.getPath('input', 'mtgInput.txt'), 'w+') as outfile:
         outfile.writelines(cards)
             
     return cardCount
