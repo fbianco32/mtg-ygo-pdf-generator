@@ -3,7 +3,9 @@ import Utils
 
 IGNORED_LINES = [
     "",
-    "SIDEBOARD:"
+    "SIDEBOARD:",
+    "ATTRACTIONS:",
+    "STICKERS:"
 ]
 
 def prepareMTGDecks() -> int:
