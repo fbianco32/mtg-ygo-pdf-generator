@@ -3,13 +3,14 @@ import urllib.request
 import Utils
 import requests as req
 import json
+import os
 
 ImageFile.LOAD_TRUNCATED_IMAGES=True
 baseUrl = 'https://api.scryfall.com/cards/'
 
-def getCardsFromFile(pathToFile):
+def getCardsFromFile():
     cardImages = []
-    with open(pathToFile, 'r') as f:
+    with open(Utils.getPath('input', 'mtgInput.txt'), 'r') as f:
         lines = f.readlines()
         f.close()
     for line in lines:
@@ -45,7 +46,7 @@ def getFaces(card):
         return [card]
 
 def getCardImageByFace(face):
-    urllib.request.urlretrieve((face['image_uris']['normal']), Utils.tempFilePath)
-    img = Image.open(Utils.tempFilePath)
+    urllib.request.urlretrieve((face['image_uris']['normal']), Utils.getTempFilePath())
+    img = Image.open(Utils.getTempFilePath())
     img.getdata() ## Genuinamente no tengo idea por que pero hacer eso hace que la resolucion sea buena, sin esto es terrible (sleep no funciona)
     return img

@@ -4,16 +4,18 @@ import os
 import fpdf
 import shutil
 
+def getTempDir() -> str:
+    return getPath('temp')
 
-tempDir = './temp/'
-tempFilePath = './temp/tempFile'
+def getTempFilePath() -> str:
+    return getPath('temp', 'tempFile')
 
 def makeTempDir():
-    os.makedirs(tempDir)
-    open(tempFilePath, 'w+').close()
+    os.makedirs(getTempDir())
+    open(getTempFilePath(), 'w+').close()
 
 def cleanTempDir():
-    shutil.rmtree(tempDir)
+    shutil.rmtree(getTempDir())
 
 def inchesToMm(num):
     return num * 25.4
@@ -73,3 +75,6 @@ def hex_to_rgb(value):
     value = value.lstrip('#')
     lv = len(value)
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
+
+def getPath(*path) -> str:
+    return os.path.abspath(os.path.join(*path))
