@@ -1,7 +1,7 @@
 # Process
 input/*
 output/*
-temp/*
+temp/
 ydkInput/*
 mtgInput/*
 
