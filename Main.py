@@ -1,5 +1,6 @@
 import Utils
 import MTGCardService
+import MTGDecksService
 import YGOCardService
 import YGOYdkService
 import CustomCardService
@@ -21,19 +22,29 @@ def main():
             print('(The YDKs should be exported directly from YGOProDeck, saved as .ydk)')
             input('(Go to your YGOProDeck deck > More > Download YDK or, in the deckbuilder, Export > To .ydk Deck file)\n')
             print('Preparing YDK')
-            YGOYdkService.prepareYDKs()
+            cardCount = YGOYdkService.prepareYDKs()
+            if cardCount == 0:
+                print('No valid decks found, aborting')
+                return
+            print(f"Found {cardCount} unique cards")
             input('YDK prepared. Press [ENTER] to continue')
             print('Fetching card images...')
-            images = YGOCardService.getCardsFromFile('./input/ygoInput.txt')
+            images = YGOCardService.getCardsFromFile()
             print('Assembling PDF...')
             Utils.assemblePDF(images, width, height, margin, '#60647f', 59, 86, hasCardback, 'ygoOutput') # bgColor for mtg is always gray, dpi for YGO is always 187
             print('Done! PDF can be found in ./output/ygoOutput.pdf')
         elif(option == 'm'):
-            print('Move decklist file to input folder, rename it to "mtgInput.txt", then press [ENTER] to continue')
-            print('(The decklist should be in Moxfield\'s export format, saved as .txt)')
+            print('Move decklist files to input folder, then press [ENTER] to continue')
+            print('(The decklists should be in Moxfield\'s export format, saved as .txt)')
             input('(Go to your Moxfield deck > Export > Copy full list and save that to a .txt file)\n')
+            cardCount = MTGDecksService.prepareMTGDecks()
+            if cardCount == 0:
+                print('No valid decks found, aborting')
+                return
+            print(f"Found {cardCount} unique cards")
+            input('MTG decks prepared. Press [ENTER] to continue')
             print('Fetching cards...')
-            images = MTGCardService.getCardsFromFile('./input/mtgInput.txt')
+            images = MTGCardService.getCardsFromFile()
             print('Assembling PDF...')
             Utils.assemblePDF(images, width, height, margin, '#13160d', 63, 88, hasCardback, 'mtgOutput') # bgColor for mtg is always black, dpi for MTG is always 196
            # images[0].save('output/mtgOutput.pdf', "PDF", save_all=True, append_images=images[1:], dpi=(196,196))
