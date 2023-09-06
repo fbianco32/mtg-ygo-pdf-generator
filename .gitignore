@@ -4,6 +4,7 @@ output/
 temp/
 ydkInput/
 mtgInput/
+pdfInput/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
