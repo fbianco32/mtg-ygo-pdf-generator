@@ -5,12 +5,14 @@ import YGOCardService
 import YGOYdkService
 import CustomCardService
 import PDFService
+from services.digimon import DigimonDecksService, DigimonCardService
+
 
 def main():
     try:
         Utils.makeTempDir()
         Utils.makeDirsIfNotExists()
-        option = input('Choose game: [Y]GO/[M]TG/[C]ustom\n').lower()
+        option = input('Choose game: [Y]GO/[M]TG/[D]igimon/[C]ustom\n').lower()
         width = int(input('Enter page Width (mm): \n'))
         height = int(input('Enter page Height (mm): \n'))
         margin = int(input('Enter Margin between cards (mm): \n'))
@@ -50,6 +52,22 @@ def main():
             print('Assembling PDF...')
             PDFService.assemblePDF(images, width, height, margin, '#13160d', 63, 88, hasCardback, 'mtgOutput') # bgColor for mtg is always black, dpi for MTG is always 196
             print('Done! PDF can be found in ./output/mtgOutput.pdf')
+        elif (option == 'd'):
+            print('Move decklist files to input folder, then press [ENTER] to continue')
+            print('(The decklists should be in digimoncard.io export format, saved as .txt)')
+            input('(Go to your digimoncard.io deck > Export > Copy full list and save that to a .txt file)\n')
+            cardCount = DigimonDecksService.prepareDigimon()
+            if cardCount == 0:
+                print('No valid decks found, aborting')
+                return
+            print(f"Found {cardCount} unique cards")
+            input('Digimon decks prepared. Press [ENTER] to continue')
+            print('Fetching cards...')
+            images = DigimonCardService.getCardsFromFile(cardCount)
+            print('Assembling PDF...')
+            PDFService.assemblePDF(images, width, height, margin, '#13160d', 63, 88, hasCardback,
+                                   'digimonOutput')  # bgColor for mtg is always black, dpi for MTG is always 196
+            print('Done! PDF can be found in ./output/digimonOutput.pdf')
         elif(option == 'c'):
             input('Move card images to input folder, then press [ENTER] to continue\n')
             print('Fetching cards...')

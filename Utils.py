@@ -19,6 +19,7 @@ def makeDirsIfNotExists():
     makeDirIfNotExists(getPath('output'))
     makeDirIfNotExists(getPath('mtgInput'))
     makeDirIfNotExists(getPath('ydkInput'))
+    makeDirIfNotExists(getPath('digimonInput'))
 
 def makeDirIfNotExists(path):
     if not os.path.exists(path):
