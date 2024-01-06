@@ -1,11 +1,9 @@
 import Utils
-import MTGCardService
-import MTGDecksService
-import YGOCardService
-import YGOYdkService
-import CustomCardService
+from gameServices.mtg import MTGDecksService, MTGCardService
+from gameServices.ygo import YGOCardService, YGOYdkService
+from gameServices.custom import CustomCardService
 import PDFService
-from services.digimon import DigimonDecksService, DigimonCardService
+from gameServices.digimon import DigimonDecksService, DigimonCardService
 
 
 def main():
