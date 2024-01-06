@@ -52,8 +52,8 @@ def main():
             print('Done! PDF can be found in ./output/mtgOutput.pdf')
         elif (option == 'd'):
             print('Move decklist files to input folder, then press [ENTER] to continue')
-            print('(The decklists should be in digimoncard.io export format, saved as .txt)')
-            input('(Go to your digimoncard.io deck > Export > Copy full list and save that to a .txt file)\n')
+            print('(The decklists should be in digimoncard.app export format, saved as .txt)')
+            input('(Go to your digimoncard.app deck > Export > Copy full list and save that to a .txt file)\n')
             cardCount = DigimonDecksService.prepareDigimon()
             if cardCount == 0:
                 print('No valid decks found, aborting')
