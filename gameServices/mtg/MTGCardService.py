@@ -4,6 +4,7 @@ import Utils
 import requests as req
 import json
 import os
+from pathlib import Path
 
 ImageFile.LOAD_TRUNCATED_IMAGES=True
 baseUrl = 'https://api.scryfall.com/cards/'
@@ -11,7 +12,7 @@ baseUrl = 'https://api.scryfall.com/cards/'
 def getCardsFromFile(totalCards):
     cardImages = []
     cardCount = 0
-    with open(Utils.getPath('input', 'mtgInput.txt'), 'r') as f:
+    with open(Path.cwd()/'input'/'mtgInput.txt', 'r') as f:
         lines = f.readlines()
         f.close()
     for line in lines:

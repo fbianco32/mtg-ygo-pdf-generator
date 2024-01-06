@@ -3,27 +3,24 @@ from typing import List
 import os
 import fpdf
 import shutil
+from pathlib import Path
 
 def getTempDir() -> str:
-    return getPath('temp')
+    return Path.cwd()/'temp'
 
 def getTempFilePath() -> str:
-    return getPath('temp', 'tempFile')
+    return Path.cwd()/'temp'/'tempFile'
 
 def makeTempDir():
-    makeDirIfNotExists(getTempDir())
-    open(getTempFilePath(), 'w+').close()
-
+    Path.mkdir(getTempDir(),exist_ok=True)
+ 
 def makeDirsIfNotExists():
-    makeDirIfNotExists(getPath('input'))
-    makeDirIfNotExists(getPath('output'))
-    makeDirIfNotExists(getPath('mtgInput'))
-    makeDirIfNotExists(getPath('ydkInput'))
-    makeDirIfNotExists(getPath('digimonInput'))
+    Path.mkdir(Path.cwd()/'input',exist_ok=True)
+    Path.mkdir(Path.cwd()/'output',exist_ok=True)
+    Path.mkdir(Path.cwd()/'mtgInput',exist_ok=True)
+    Path.mkdir(Path.cwd()/'ydkInput',exist_ok=True)
+    Path.mkdir(Path.cwd()/'digimonInput',exist_ok=True)
 
-def makeDirIfNotExists(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
 
 def cleanTempDir():
     shutil.rmtree(getTempDir())
@@ -48,6 +45,3 @@ def rgb_to_percent(values):
     for value in values:
         valuesOut.append(value/255)
     return valuesOut
-
-def getPath(*path) -> str:
-    return os.path.abspath(os.path.join(*path))
