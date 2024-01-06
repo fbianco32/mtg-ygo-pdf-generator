@@ -6,6 +6,7 @@ def prepareDigimon() -> int:
   with open(Utils.getPath('input', 'digimonInput.txt'), 'w') as outfile:
     for fname in os.listdir(Utils.getPath('digimonInput')):
       with open(Utils.getPath('digimonInput', fname)) as infile:
+        next(infile)
         for line in infile:
           textInLine = line.split()
           quantity = int(textInLine[0])
