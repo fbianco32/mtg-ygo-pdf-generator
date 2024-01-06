@@ -1,2 +1,4 @@
 fpdf2==2.7.5
 Pillow==10.0
+requests==2.31.0
+PyMuPDF==1.23.8
