@@ -1,6 +1,4 @@
 import Utils
-import MTGCardService
-import YGOCardService
 import PDFService
 
 

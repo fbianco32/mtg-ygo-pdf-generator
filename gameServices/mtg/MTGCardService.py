@@ -11,7 +11,7 @@ baseUrl = 'https://api.scryfall.com/cards/'
 def getCardsFromFile(totalCards):
     cardImages = []
     cardCount = 0
-    with open(Utils.getPath('input', 'mtgInput.txt'), 'r') as f:
+    with open(Utils.getPath('../../input', 'mtgInput.txt'), 'r') as f:
         lines = f.readlines()
         f.close()
     for line in lines:
