@@ -17,9 +17,6 @@ def getCardsFromFile(totalCards):
     lines = f.readlines()
     f.close()
   for index, line in enumerate(lines):
-    if index and index % 15 == 0:
-      print("---- 10 Seconds sleep, digimon.io has a rate limit of 15 cards every 10 seconds ----")
-      sleep(10)
     cardImages.append(getCardById(line.rstrip()))
     cardCount += 1
     print("Loaded card: " + line.rstrip() + ", " + str(round(((cardCount / totalCards) * 100), 2)) + "% done")
