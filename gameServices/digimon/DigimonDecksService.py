@@ -1,11 +1,13 @@
 import os
 import Utils
+from pathlib import Path
 
 def prepareDigimon() -> int:
   cardCount = 0
-  with open(Utils.getPath('input', 'digimonInput.txt'), 'w') as outfile:
-    for fname in os.listdir(Utils.getPath('digimonInput')):
-      with open(Utils.getPath('digimonInput', fname)) as infile:
+
+  with open(Path.cwd()/'input'/'digimonInput.txt', 'w') as outfile:
+    for fname in (Path.cwd()/'digimonInput').iterdir():
+      with open(fname, 'r') as infile:
         next(infile)
         next(infile)
         for line in infile:

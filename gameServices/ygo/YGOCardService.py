@@ -2,6 +2,7 @@ from PIL import Image
 import urllib.request
 import Utils
 import os
+from pathlib import Path
 
 BASE_URL = "https://images.ygoprodeck.com/images/cards/"
 IMAGE_EXTENSION = ".jpg"
@@ -10,7 +11,7 @@ IMAGE_EXTENSION = ".jpg"
 def getCardsFromFile(totalCards):
     cardImages = []
     cardCount = 0
-    with open(Utils.getPath('input', 'ygoInput.txt'), 'r') as f:
+    with open(Path.cwd()/'input'/'ygoInput.txt', 'r') as f:
         lines = f.readlines()
         f.close()
     for line in lines:

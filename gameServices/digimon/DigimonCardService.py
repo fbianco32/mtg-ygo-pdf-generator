@@ -3,6 +3,7 @@ from time import sleep
 from PIL import Image
 import Utils
 import shutil
+from pathlib import Path
 
 import requests
 
@@ -13,7 +14,7 @@ IMAGE_EXTENSION = ".webp"
 def getCardsFromFile(totalCards):
   cardImages = []
   cardCount = 0
-  with open(Utils.getPath('input', 'digimonInput.txt'), 'r') as f:
+  with open(Path.cwd()/'input'/'digimonInput.txt', 'r') as f:
     lines = f.readlines()
     f.close()
   for index, line in enumerate(lines):
