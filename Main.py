@@ -15,10 +15,14 @@ def main():
         height = int(input('Enter page Height (mm): \n'))
         margin = int(input('Enter Margin between cards (mm): \n'))
         hasCardback = False
+        hasCutGuides = False
         cardbackOption = input('Do you want to add a cardback? ([Y][N])\n')
         if(cardbackOption.lower() == 'y'):
             input('Move the cardback.jpg file to input folder, then press [ENTER] to continue\n')
             hasCardback = True
+        cutGuidesOption = input('Do you want to add cut guides? ([Y][N])\n')
+        if(cutGuidesOption.lower() == 'y'):
+            hasCutGuides = True
         if(option == 'y'):
             print('Move YDK files to input folder, then press [ENTER] to continue')
             print('(The YDKs should be exported directly from YGOProDeck, saved as .ydk)')
@@ -33,7 +37,7 @@ def main():
             print('Fetching card images...')
             images = YGOCardService.getCardsFromFile(cardCount)
             print('Assembling PDF...')
-            PDFService.assemblePDF(images, width, height, margin, '#60647f', 59, 86, hasCardback, 'ygoOutput') # bgColor for mtg is always gray, dpi for YGO is always 187
+            PDFService.assemblePDF(images, width, height, margin, '#60647f', 59, 86, hasCardback, hasCutGuides, 'ygoOutput') # bgColor for mtg is always gray, dpi for YGO is always 187
             print('Done! PDF can be found in ./output/ygoOutput.pdf')
         elif(option == 'm'):
             print('Move decklist files to mtgInput folder, then press [ENTER] to continue')
@@ -48,7 +52,7 @@ def main():
             print('Fetching cards...')
             images = MTGCardService.getCardsFromFile(cardCount)
             print('Assembling PDF...')
-            PDFService.assemblePDF(images, width, height, margin, '#13160d', 63, 88, hasCardback, 'mtgOutput') # bgColor for mtg is always black, dpi for MTG is always 196
+            PDFService.assemblePDF(images, width, height, margin, '#13160d', 63, 88, hasCardback, hasCutGuides, 'mtgOutput') # bgColor for mtg is always black, dpi for MTG is always 196
             print('Done! PDF can be found in ./output/mtgOutput.pdf')
         elif (option == 'd'):
             print('Move decklist files to input folder, then press [ENTER] to continue')
@@ -68,8 +72,7 @@ def main():
             elif (option == 'n'):
                 images = DigimonCardService.getCardsFromFile(cardCount)
             print('Assembling PDF...')
-            PDFService.assemblePDF(images, width, height, margin, '#13160d', 63, 88, hasCardback,
-                                   'digimonOutput')  # bgColor for mtg is always black, dpi for MTG is always 196
+            PDFService.assemblePDF(images, width, height, margin, '#13160d', 63, 88, hasCardback, hasCutGuides, 'digimonOutput')  # bgColor for mtg is always black, dpi for MTG is always 196
             print('Done! PDF can be found in ./output/digimonOutput.pdf')
         elif(option == 'c'):
             input('Move card images to input folder, then press [ENTER] to continue\n')
@@ -79,7 +82,7 @@ def main():
             cardHeight = int(input('Enter card height in mm: \n'))
             bgColor = input('Enter page background color in hex (#1234AB): \n')
             print('Assembling PDF...')
-            PDFService.assemblePDF(images, width, height, margin, bgColor, cardWidth, cardHeight, hasCardback, 'customOutput')
+            PDFService.assemblePDF(images, width, height, margin, bgColor, cardWidth, cardHeight, hasCardback, hasCutGuides, 'customOutput')
             print('Done! PDF can be found in ./output/customOutput.pdf')
         else:
             print('Invalid Game')
