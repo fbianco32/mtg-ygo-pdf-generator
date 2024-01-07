@@ -30,13 +30,16 @@ def getCardsFromFileHighQuality(totalCards):
   return cardImages
 
 def getCardByIdHighQuality(id, allCards):
-  cardVersionImageUrls = [card.get("imageUrl") for card in allCards if id == card.get("cardid")]
-  print("card: ", cardVersionImageUrls[-1])
-  response = requests.get(cardVersionImageUrls[-1], stream=True, headers = {
+  sleep(0.1)
+  headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0',
-  })
-  print("response: ", response)
-  print("raw: ", response.raw)
+  }
+  cardVersionImageUrls = [card.get("imageUrl") for card in allCards if id == card.get("cardid")]
+  cardIndex = len(cardVersionImageUrls) -1
+  if cardIndex > 1:
+    print("card options: ", [ f'{index}: {link}' for index, link in enumerate(cardVersionImageUrls)])
+    cardIndex = input("index: ")
+  response = requests.get(cardVersionImageUrls[int(cardIndex)], stream=True, headers=headers)
   with open(Utils.getTempFilePath(), 'wb') as out_file:
     shutil.copyfileobj(response.raw, out_file)
   del response
