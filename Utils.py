@@ -1,7 +1,4 @@
-from PIL import Image
 from typing import List
-import os
-import fpdf
 import shutil
 from pathlib import Path
 

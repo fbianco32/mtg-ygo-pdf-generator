@@ -18,13 +18,14 @@ def getCardsFromFile(totalCards):
     for line in lines:
         fullCardname = line.rstrip()
         amount = fullCardname.split(" ")[0]
+        cardInfo = getCardInfo(fullCardname)
+        faces = getFaces(getCardBySetAndNumber(cardInfo[1], cardInfo[2]))
+        faceImages = list(map(lambda face: getCardImageByFace(face), faces))
         for i in range (int(amount)):
-            cardInfo = getCardInfo(fullCardname)
-            faces = getFaces(getCardBySetAndNumber(cardInfo[1], cardInfo[2]))
-            for face in faces:
-                cardImages.append(getCardImageByFace(face))
+            for faceImg in faceImages:
+                cardImages.append(faceImg)
                 cardCount += 1
-                print("Loaded card: " + fullCardname + ", " + str(round(((cardCount/totalCards)*100), 2)) +"% done")
+        print("Loaded card: " + fullCardname + ", " + str(round(((cardCount/totalCards)*100), 2)) +"% done")
     return cardImages
 
 def getCardInfo(fullCardname):
