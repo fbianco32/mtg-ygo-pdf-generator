@@ -4,7 +4,7 @@ from typing import List
 import fpdf
 import fitz
 
-def assemblePDF(images: List[Image.Image], width: float, height: float, margin: float, bgColor: str, cardWidth, cardHeight, hasCardback, fileName):
+def assemblePDF(images: List[Image.Image], width: float, height: float, margin: float, bgColor: str, cardWidth, cardHeight, hasCardback, hasCutGuides, fileName):
     pdf = fpdf.FPDF(orientation='L', unit = 'mm', format=(int(height), int(width)))
     x = margin
     y = margin
@@ -33,7 +33,8 @@ def assemblePDF(images: List[Image.Image], width: float, height: float, margin: 
             pdf.add_page()
             pdf.image(bg,0,0,width,height, 'jpeg')
             y = margin
-        drawCutGuides(pdf, x, y, margin, cardWidth, cardHeight)
+        if(hasCutGuides):
+            drawCutGuides(pdf, x, y, margin, cardWidth, cardHeight)
         pdf.image(image, x, y, cardWidth, cardHeight)
         x += cardWidth + margin
     pdf.output('output/'+fileName+'.pdf', 'F')
