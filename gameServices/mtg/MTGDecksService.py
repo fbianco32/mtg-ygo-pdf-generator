@@ -28,7 +28,7 @@ def prepare_txt_deck(cardCount, cards, fname):
                 if line[-1] != '\n':
                     line += '\n'
                 cards.append(line)
-                cardCount += 1
+                cardCount += int(line.split(" ")[0])
     return cardCount, cards
 
 def prepare_csv_deck(cardCount, cards, fname):
