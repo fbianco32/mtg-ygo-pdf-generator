@@ -60,8 +60,13 @@ def main():
                 return
             print(f"Found {cardCount} unique cards")
             input('Digimon decks prepared. Press [ENTER] to continue')
+            highQuality = input('High quality (experimental): [Y]es/[N]o\n').lower()
             print('Fetching cards...')
-            images = DigimonCardService.getCardsFromFile(cardCount)
+            images = []
+            if highQuality == 'y':
+                images = DigimonCardService.getCardsFromFileHighQuality(cardCount)
+            elif (option == 'n'):
+                images = DigimonCardService.getCardsFromFile(cardCount)
             print('Assembling PDF...')
             PDFService.assemblePDF(images, width, height, margin, '#13160d', 63, 88, hasCardback,
                                    'digimonOutput')  # bgColor for mtg is always black, dpi for MTG is always 196
