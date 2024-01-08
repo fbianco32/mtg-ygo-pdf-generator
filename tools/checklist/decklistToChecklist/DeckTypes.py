@@ -1,0 +1,3 @@
+YGO = "YGO"
+MTG = "MTG"
+DIGIMON = "DIGIMON"
