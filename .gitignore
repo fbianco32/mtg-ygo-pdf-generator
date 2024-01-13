@@ -5,6 +5,7 @@ temp/
 ydkInput/
 mtgInput/
 pdfInput/
+digimonInput/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
