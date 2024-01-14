@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 
 class GenericList(): 
@@ -18,19 +19,15 @@ class GenericList():
 
     def setDataframeIds(self, ids):
         if all(isinstance(item, str) for item in ids):
-            idColumn = self.dataframe['id']
-            newIdColumn = idColumn.apply(ids)
-            self.dataframe['id'] = newIdColumn
+            self.dataframe['id'] = ids
     
     def setDataframeNames(self, names):
         if all(isinstance(item, str) for item in names):
-            self.dataframe['names'] = names
+            self.dataframe['name'] = names
     
     def setDataframeExpecteds(self, expecteds):
-        if all(isinstance(item, str) for item in expecteds):
-            expectedColumn = self.dataframe['expected']
-            newExpectedColumn = expectedColumn.apply(expecteds)
-            self.dataframe['expected'] = newExpectedColumn
+        if all(isinstance(item, int) for item in expecteds):
+            self.dataframe['expected'] = expecteds
 
     def getName(self):
         return self.name
@@ -40,5 +37,8 @@ class GenericList():
 
     def getDataframe(self):
         return self.dataframe
+    
+    def save(self):
+        self.dataframe.to_csv("./output/" + self.name+'.csv', index=False, header=True)
 
         
