@@ -33,18 +33,19 @@ class MTGHandler(GenericListGenerator):
                 card_names = []
                 card_serial_codes = []
                 for line in file:
-                    # Split the line into tokens
-                    tokens = line.strip().split()
+                    if(line.rstrip() not in IGNORED_LINES):
+                        # Split the line into tokens
+                        tokens = line.strip().split()
+                        
+                        # Extract the card amount, name, and serial code
+                        amount = int(tokens[0])
+                        name = ' '.join(tokens[1:len(tokens)-2])
+                        serial_code = ' '.join(tokens[-2:len(tokens)])
 
-                    # Extract the card amount, name, and serial code
-                    amount = int(tokens[0])
-                    name = ' '.join(tokens[1:len(tokens)-2])
-                    serial_code = ' '.join(tokens[-2:len(tokens)])
-
-                    # Append the extracted values to the corresponding arrays
-                    card_amounts.append(amount)
-                    card_names.append(name)
-                    card_serial_codes.append(serial_code)
+                        # Append the extracted values to the corresponding arrays
+                        card_amounts.append(amount)
+                        card_names.append(name)
+                        card_serial_codes.append(serial_code)
                 
                 deck_dataframe = pd.DataFrame({
                     'expected': card_amounts,
