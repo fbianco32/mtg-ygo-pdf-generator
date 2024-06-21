@@ -60,7 +60,7 @@ def main():
         cardbackOption = input('Do you want to add a cardback? ([Y][N])\n')
         if(cardbackOption.lower() == 'y'):
             input('Move the cardback.jpg file to input folder, then press [ENTER] to continue\n')
-            args['hasCardback'] = True
+            hasCardback = True
         cutGuidesOption = input('Do you want to add cut guides? ([Y][N])\n')
         if(cutGuidesOption.lower() == 'y'):
             args['hasCutGuides'] = True
