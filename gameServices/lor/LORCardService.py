@@ -6,27 +6,30 @@ import json
 import os
 from pathlib import Path
 
+from gameServices.CardService import CardService
+
 ImageFile.LOAD_TRUNCATED_IMAGES=True
 baseUrl = 'https://api.lorcana-api.com'
 
-def getCardsFromFile(totalCards):
-    cardImages = []
-    cardCount = 0
-    with open(Path.cwd()/'input'/'lorInput.txt', 'r') as f:
-        lines = f.readlines()
-        f.close()
-    for line in lines:
-        fullCardname = line.rstrip()
-        amount = fullCardname.split(" ")[0]
-        name = getCardName(fullCardname)
-        face = getFace(getCardByname(name))
-        faceImages = [getCardImageByFace(face)]
-        for i in range (int(amount)):
-            for faceImg in faceImages:
-                cardImages.append(faceImg)
-                cardCount += 1
-        print("Loaded card: " + fullCardname + ", " + str(round(((cardCount/totalCards)*100), 2)) +"% done")
-    return cardImages
+class LORCardService(CardService):
+    def getCardsFromFile(totalCards):
+        cardImages = []
+        cardCount = 0
+        with open(Path.cwd()/'input'/'lorInput.txt', 'r') as f:
+            lines = f.readlines()
+            f.close()
+        for line in lines:
+            fullCardname = line.rstrip()
+            amount = fullCardname.split(" ")[0]
+            name = getCardName(fullCardname)
+            face = getFace(getCardByname(name))
+            faceImages = [getCardImageByFace(face)]
+            for i in range (int(amount)):
+                for faceImg in faceImages:
+                    cardImages.append(faceImg)
+                    cardCount += 1
+            print("Loaded card: " + fullCardname + ", " + str(round(((cardCount/totalCards)*100), 2)) +"% done")
+        return cardImages
 
 def getCardName(fullCardname):
     name = fullCardname.split(" ")[1:]

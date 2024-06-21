@@ -8,9 +8,24 @@ from pathlib import Path
 
 import requests
 
+from gameServices.CardService import CardService
+
 
 BASE_URL = "https://digimoncard.app/assets/images/cards/"
 IMAGE_EXTENSION = ".webp"
+
+class DGMCardService(CardService):
+  def getCardsFromFile(totalCards):
+    cardImages = []
+    cardCount = 0
+    with open(Path.cwd()/'input'/'digimonInput.txt', 'r') as f:
+      lines = f.readlines()
+      f.close()
+    for index, line in enumerate(lines):
+      cardImages.append(getCardById(line.rstrip()))
+      cardCount += 1
+      print("Loaded card: " + line.rstrip() + ", " + str(round(((cardCount / totalCards) * 100), 2)) + "% done")
+    return cardImages
 
 
 def getCardsFromFileHighQuality(totalCards):
@@ -46,19 +61,6 @@ def getCardByIdHighQuality(id, allCards):
   img = Image.open(Utils.getTempFilePath())
   img.getdata()  ## Genuinamente no tengo idea por que pero hacer eso hace que la resolucion sea buena, sin esto es terrible (sleep no funciona)
   return img
-
-def getCardsFromFile(totalCards):
-  cardImages = []
-  cardCount = 0
-  with open(Path.cwd()/'input'/'digimonInput.txt', 'r') as f:
-    lines = f.readlines()
-    f.close()
-  for index, line in enumerate(lines):
-    cardImages.append(getCardById(line.rstrip()))
-    cardCount += 1
-    print("Loaded card: " + line.rstrip() + ", " + str(round(((cardCount / totalCards) * 100), 2)) + "% done")
-  return cardImages
-
 
 def getCardById(id):
   response = requests.get(BASE_URL + id + IMAGE_EXTENSION, stream=True)
