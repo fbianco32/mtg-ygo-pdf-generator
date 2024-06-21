@@ -1,10 +1,12 @@
 # Process
-input/
-output/
-temp/
-ydkInput/
-mtgInput/
-pdfInput/
+input/*
+output/*
+temp/*
+ydkInput/*
+mtgInput/*
+pdfInput/*
+digimonInput/*
+lorInput/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
