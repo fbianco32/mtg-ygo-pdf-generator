@@ -12,7 +12,7 @@ from gameServices.ygo.YGOCardService import YGOCardService
 from gameServices.ygo.YGOYdkService import YGOYdkService
 from Utils import texts as texts
 import PDFService
-import argparse
+
 
 
 def walkthrough(deckService: DeckService, cardService: CardService, **kwargs):
@@ -47,6 +47,8 @@ def walkthrough(deckService: DeckService, cardService: CardService, **kwargs):
 
 def main():
     try:
+        Utils.makeTempDir()
+        Utils.makeDirsIfNotExists()
         args = {}
         option = input('Choose game: [Y]GO/[M]TG/[D]igimon/[L]orcana/[C]ustom\n').lower()
         args['option'] = option
@@ -60,104 +62,30 @@ def main():
         cardbackOption = input('Do you want to add a cardback? ([Y][N])\n')
         if(cardbackOption.lower() == 'y'):
             input('Move the cardback.jpg file to input folder, then press [ENTER] to continue\n')
-            hasCardback = True
+            args['hasCardback'] = True
         cutGuidesOption = input('Do you want to add cut guides? ([Y][N])\n')
         if(cutGuidesOption.lower() == 'y'):
             args['hasCutGuides'] = True
-        game_switch(**args)
+
+        if option == 'y':
+            walkthrough(YGOYdkService, YGOCardService, **args)
+        elif option == 'm':
+            walkthrough(MTGDecksService, MTGCardService, **args)
+        elif option == 'd':
+            walkthrough(DGMDecksService, DGMCardService, **args)
+        elif option == 'l':
+            walkthrough(LORDecksService, LORCardService, **args)
+        elif option == 'c':
+            walkthrough(None, CustomCardService, **args)
+        else:
+            print('Invalid Game')
+            return
     except BaseException as e:
         print("An error has occured, info: ")
         raise(e)
     finally:
         Utils.cleanTempDir()
 
-
-def game_switch(**kwargs):
-    option = kwargs['option']
-    if option == 'y':
-        walkthrough(YGOYdkService, YGOCardService, **kwargs)
-    elif option == 'm':
-        walkthrough(MTGDecksService, MTGCardService, **kwargs)
-    elif option == 'd':
-        walkthrough(DGMDecksService, DGMCardService, **kwargs)
-    elif option == 'l':
-        walkthrough(LORDecksService, LORCardService, **kwargs)
-    elif option == 'c':
-        walkthrough(None, CustomCardService, **kwargs)
-    else:
-        print('Invalid Game')
-        return
-
-
-def args():
-    argument_parser = argparse.ArgumentParser(description='Create a PDF of your decks')
-    oneline = argument_parser.add_argument(
-        "--one-line", "-o",
-        action='store_true',
-        required=False,
-        default=False,
-        help="Use the command-line with no input prompts"
-    )
-    options = argument_parser.add_argument_group()
-    game = options.add_argument(
-        "-g", "--game",
-        choices=["d", "l", "m", "c", "y"],
-        dest="option",
-    )
-    page_width = options.add_argument(
-        "--page-width", "-pw", "--pw",
-        type=int,
-        dest="pageWidth",
-    )
-    page_height = options.add_argument(
-        "--page-height", "-ph", "--ph",
-        type=int,
-        dest="pageHeight",
-    )
-    card_width = options.add_argument(
-        "--card-width", "-cw", "--cw",
-        required=False,
-        default="",
-        type=str,
-        dest="cardWidth",
-    )
-    card_height = options.add_argument(
-        "--card-height", "-ch", "--ch",
-        required=False,
-        default="",
-        type=str,
-        dest="cardHeight",
-    )
-    margin = options.add_argument(
-        "--margin", "-m",
-        default=0,
-        type=int,
-        required=False,
-        dest="margin",
-    )
-    has_cardback = options.add_argument(
-        "--hasCardback",
-        default=False,
-        action='store_true',
-        dest="hasCardback",
-    )
-    has_cutguides = options.add_argument(
-        "--hasCutGuides",
-        default=False,
-        action='store_true',
-        dest="hasCutGuides",
-    )
-    return argument_parser.parse_args()
-
-
+    
 if __name__ == "__main__":
-    Utils.makeTempDir()
-    Utils.makeDirsIfNotExists()
-    arguments = args()
-    if arguments.one_line:
-        dictionary = vars(arguments)
-        game_switch(**dictionary)
-
-    else:
-        main()
-
+    main()
