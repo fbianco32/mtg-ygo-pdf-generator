@@ -98,59 +98,55 @@ def args():
         default=False,
         help="Use the command-line with no input prompts"
     )
-    if oneline.const:
-        options = argument_parser.add_argument_group()
-        game = options.add_argument(
-            "-g", "--game",
-            choices=["d", "l", "m", "c", "y"],
-            required=True,
-            dest="option",
-        )
-        page_width = options.add_argument(
-            "--page-width", "-pw", "--pw",
-            type=int,
-            required=True,
-            dest="pageWidth",
-        )
-        page_height = options.add_argument(
-            "--page-height", "-ph", "--ph",
-            type=int,
-            required=True,
-            dest="pageHeight",
-        )
-        card_width = options.add_argument(
-            "--card-width", "-cw", "--cw",
-            required=False,
-            default="",
-            type=str,
-            dest="cardWidth",
-        )
-        card_height = options.add_argument(
-            "--card-height", "-ch", "--ch",
-            required=False,
-            default="",
-            type=str,
-            dest="cardHeight",
-        )
-        margin = options.add_argument(
-            "--margin", "-m",
-            default=0,
-            type=int,
-            required=False,
-            dest="margin",
-        )
-        has_cardback = options.add_argument(
-            "--hasCardback",
-            default=False,
-            action='store_true',
-            dest="hasCardback",
-        )
-        has_cutguides = options.add_argument(
-            "--hasCutGuides",
-            default=False,
-            action='store_true',
-            dest="hasCutGuides",
-        )
+    options = argument_parser.add_argument_group()
+    game = options.add_argument(
+        "-g", "--game",
+        choices=["d", "l", "m", "c", "y"],
+        dest="option",
+    )
+    page_width = options.add_argument(
+        "--page-width", "-pw", "--pw",
+        type=int,
+        dest="pageWidth",
+    )
+    page_height = options.add_argument(
+        "--page-height", "-ph", "--ph",
+        type=int,
+        dest="pageHeight",
+    )
+    card_width = options.add_argument(
+        "--card-width", "-cw", "--cw",
+        required=False,
+        default="",
+        type=str,
+        dest="cardWidth",
+    )
+    card_height = options.add_argument(
+        "--card-height", "-ch", "--ch",
+        required=False,
+        default="",
+        type=str,
+        dest="cardHeight",
+    )
+    margin = options.add_argument(
+        "--margin", "-m",
+        default=0,
+        type=int,
+        required=False,
+        dest="margin",
+    )
+    has_cardback = options.add_argument(
+        "--hasCardback",
+        default=False,
+        action='store_true',
+        dest="hasCardback",
+    )
+    has_cutguides = options.add_argument(
+        "--hasCutGuides",
+        default=False,
+        action='store_true',
+        dest="hasCutGuides",
+    )
     return argument_parser.parse_args()
 
 
