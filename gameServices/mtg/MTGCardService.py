@@ -6,27 +6,29 @@ import json
 import os
 from pathlib import Path
 
+from gameServices.CardService import CardService
+
 ImageFile.LOAD_TRUNCATED_IMAGES=True
 baseUrl = 'https://api.scryfall.com/cards/'
-
-def getCardsFromFile(totalCards):
-    cardImages = []
-    cardCount = 0
-    with open(Path.cwd()/'input'/'mtgInput.txt', 'r') as f:
-        lines = f.readlines()
-        f.close()
-    for line in lines:
-        fullCardname = line.rstrip()
-        amount = fullCardname.split(" ")[0]
-        cardInfo = getCardInfo(fullCardname)
-        faces = getFaces(getCardBySetAndNumber(cardInfo[1], cardInfo[2]))
-        faceImages = list(map(lambda face: getCardImageByFace(face), faces))
-        for i in range (int(amount)):
-            for faceImg in faceImages:
-                cardImages.append(faceImg)
-                cardCount += 1
-        print("Loaded card: " + fullCardname + ", " + str(round(((cardCount/totalCards)*100), 2)) +"% done")
-    return cardImages
+class MTGCardService(CardService):
+    def getCardsFromFile(totalCards):
+        cardImages = []
+        cardCount = 0
+        with open(Path.cwd()/'input'/'mtgInput.txt', 'r') as f:
+            lines = f.readlines()
+            f.close()
+        for line in lines:
+            fullCardname = line.rstrip()
+            amount = fullCardname.split(" ")[0]
+            cardInfo = getCardInfo(fullCardname)
+            faces = getFaces(getCardBySetAndNumber(cardInfo[1], cardInfo[2]))
+            faceImages = list(map(lambda face: getCardImageByFace(face), faces))
+            for i in range (int(amount)):
+                for faceImg in faceImages:
+                    cardImages.append(faceImg)
+                    cardCount += 1
+            print("Loaded card: " + fullCardname + ", " + str(round(((cardCount/totalCards)*100), 2)) +"% done")
+        return cardImages
 
 def getCardInfo(fullCardname):
     name = fullCardname.rsplit("(", 1)[0].split(" ", 1)[1].rsplit(" ", 1)[0]

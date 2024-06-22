@@ -2,6 +2,8 @@ import os
 import csv
 from pathlib import Path
 
+from gameServices.DeckService import DeckService
+
 IGNORED_LINES = [
     "",
     "SIDEBOARD:",
@@ -9,17 +11,18 @@ IGNORED_LINES = [
     "STICKERS:"
 ]
 
-def prepareMTGDecks() -> int:
-    cardCount = 0
-    cards = []
+class MTGDecksService(DeckService):
+    def prepareDecks() -> int:
+        cardCount = 0
+        cards = []
 
-    for fname in (Path.cwd()/'mtgInput').iterdir():
-        cardCount, cards = prepare_csv_deck(cardCount, cards, fname) if fname.suffix=='.csv' else  prepare_txt_deck(cardCount, cards, fname)  
+        for fname in (Path.cwd()/'mtgInput').iterdir():
+            cardCount, cards = prepare_csv_deck(cardCount, cards, fname) if fname.suffix=='.csv' else  prepare_txt_deck(cardCount, cards, fname)  
 
-    with open(Path.cwd()/'input'/'mtgInput.txt', 'w+') as outfile:
-        outfile.writelines(cards)
-            
-    return cardCount
+        with open(Path.cwd()/'input'/'mtgInput.txt', 'w+') as outfile:
+            outfile.writelines(cards)
+                
+        return cardCount
 
 def prepare_txt_deck(cardCount, cards, fname):
     with open(fname,'r') as infile:

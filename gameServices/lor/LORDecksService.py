@@ -2,18 +2,22 @@ import os
 import csv
 from pathlib import Path
 
+from gameServices.DeckService import DeckService
 
-def prepareLORDecks() -> int:
-    cardCount = 0
-    cards = []
 
-    for fname in (Path.cwd()/'lorInput').iterdir():
-        cardCount, cards = prepare_csv_deck(cardCount, cards, fname) if fname.suffix=='.csv' else  prepare_txt_deck(cardCount, cards, fname)  
+class LORDecksService(DeckService):
 
-    with open(Path.cwd()/'input'/'lorInput.txt', 'w+') as outfile:
-        outfile.writelines(cards)
-            
-    return cardCount
+    def prepareDecks() -> int:
+        cardCount = 0
+        cards = []
+
+        for fname in (Path.cwd()/'lorInput').iterdir():
+            cardCount, cards = prepare_csv_deck(cardCount, cards, fname) if fname.suffix=='.csv' else  prepare_txt_deck(cardCount, cards, fname)  
+
+        with open(Path.cwd()/'input'/'lorInput.txt', 'w+') as outfile:
+            outfile.writelines(cards)
+                
+        return cardCount
 
 def prepare_txt_deck(cardCount, cards, fname):
     with open(fname,'r') as infile:
