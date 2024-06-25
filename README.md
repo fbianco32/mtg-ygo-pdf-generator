@@ -12,32 +12,7 @@
 * Add integration with Pokemon TCG API   
 * Add data validation on user input
 
-
-## TEMPLATES
-Magic:
-"M
-73
-98
-
-
-5
-Y
-
-N
-"
-Yugioh: 
-"Y
-69
-96
-
-
-5
-Y
-
-N
-"
-
-## OneLine Execution (with examples Based on Templates)
+## OneLine Execution
 
 ---
 To use a single command in the cmd to run the program we need to use the ``-o`` or ``--one-line`` argument,
