@@ -39,12 +39,6 @@ def assemblePDF(images: List[Image.Image], width: float, height: float, margin: 
         x += cardWidth + margin
     pdf.output('output/'+fileName+'.pdf', 'F')
 
-def hideAllCutGuides(margin, cardWidth, cardHeight, bgColor, fileName):
-    pdf = fitz.open(Utils.getPath('pdfInput', fileName))
-    for page in pdf:
-        hideCutGuides(page, margin, margin, margin, cardWidth, cardHeight, bgColor)
-    pdf.save(Utils.getPath('output', 'NoCut' + fileName))
-
 
 def drawCutGuides(pdf, x, y, margin, cardWidth, cardHeight):
     pdf.line(x,y,x-margin,y)

@@ -82,15 +82,9 @@ def makeDirsIfNotExists():
     Path.mkdir(Path.cwd()/'ydkInput',exist_ok=True)
     Path.mkdir(Path.cwd()/'dgmInput',exist_ok=True)
 
-
 def cleanTempDir():
     shutil.rmtree(getTempDir())
 
-def inchesToMm(num):
-    return num * 25.4
-
-def mmToInches(num):
-    return num / 25.4
 
 def invert(color_to_convert): 
     table =  str.maketrans('0123456789abcdef', 'fedcba9876543210')
