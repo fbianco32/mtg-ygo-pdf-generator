@@ -3,38 +3,39 @@
 # Usage
 
 * Run Main.py  
-* Follow the instructions in the console  
+* Follow the instructions in the console
+
+* Alternatively, see OneLine Execution at the end of this readme
 
 ## TODO
 * Tune margin logic/bleed to extend art intelligently   
 * Center Cards  
 * Send requests to scryfall/ygopro in batch (idk if possible)  
-* Add integration with Pokemon TCG API   
 * Add data validation on user input
 
 
 ## TEMPLATES
 Magic:
-"M
-73
-98
-
-
-5
-Y
-
-N
+"M  
+73  
+98  
+  
+  
+5  
+Y  
+  
+N  
 "
 Yugioh: 
-"Y
-69
-96
-
-
-5
-Y
-
-N
+"Y  
+69  
+96  
+  
+  
+5  
+Y  
+  
+N  
 "
 
 ## OneLine Execution (with examples Based on Templates)
@@ -52,7 +53,7 @@ the options are the following:
 | -cw / --card-width  | Used to define card width (if not present, pw will be used)  | -cw <int\>         | No        | int  | ^pw      |
 | -ch / --card-height | Used to define card height (if not present, ph will be used) | -ch <int\>         | No        | int  | ^ph      |
 | -m / --margin       | Used to define the margin used                               | -m <int\>          | No        | int  | 0        |
-| --hasCardback       | If present will use input/cardback.jpg                       | --hasCardback      | No        | -    | False    |
+| --hasCardback       | If present will use input/cardback.jpg as first image in file| --hasCardback      | No        | -    | False    |
 | --hasCutGuides      | If present will provide Cut Guides on the print              | --hasCutGuides     | No        | -    | False    |
 
 ### Examples
