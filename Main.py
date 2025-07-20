@@ -1,7 +1,9 @@
+from pathlib import Path
 import Utils
 from gameServices.CardService import CardService
 from gameServices.DeckService import DeckService
 from gameServices.custom.CustomCardService import CustomCardService
+from gameServices.custom.CustomDecksService import CustomDecksService
 from gameServices.digimon.DGMCardService import DGMCardService
 from gameServices.digimon.DGMDecksService import DGMDecksService
 from gameServices.lor.LORCardService import LORCardService
@@ -30,6 +32,9 @@ def walkthrough(deckService: DeckService, cardService: CardService, **kwargs):
     if option != 'c':
         print('Fetching card images...')
         images = cardService.getCardsFromFile(cardCount)
+    else:
+        print('Loading card images...')
+        images = cardService.getCardsFromFile(Path.cwd()/'input/custom/')
     print('Assembling PDF...')
     PDFService.assemblePDF(
         images,
@@ -83,7 +88,7 @@ def game_switch(**kwargs):
     elif option == 'l':
         walkthrough(LORDecksService, LORCardService, **kwargs)
     elif option == 'c':
-        walkthrough(None, CustomCardService, **kwargs)
+        walkthrough(CustomDecksService, CustomCardService, **kwargs)
     else:
         print('Invalid Game')
         return
