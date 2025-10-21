@@ -123,14 +123,14 @@ def args():
         "--card-width", "-cw", "--cw",
         required=False,
         default="",
-        type=str,
+        type=int,
         dest="cardWidth",
     )
     card_height = options.add_argument(
         "--card-height", "-ch", "--ch",
         required=False,
         default="",
-        type=str,
+        type=int,
         dest="cardHeight",
     )
     margin = options.add_argument(
